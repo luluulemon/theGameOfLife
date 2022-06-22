@@ -14,7 +14,7 @@ public class game {
     int startX;
     int startY;
 
-    
+
     public game(){      // readFile method will set the values
         sizeX = 1;
         sizeY = 1;
@@ -51,37 +51,37 @@ public class game {
                 
                 // check the eight neighbours that are on grid
                 if(i-1>0 && j-1>0)
-                { if (data.contains(Integer.toString(j-1)+Integer.toString(i-1)) )
-                            neighbours.add(Integer.toString(j-1)+Integer.toString(i-1));   }
+                { if (data.contains(Integer.toString(j-1)+","+Integer.toString(i-1)) )
+                            neighbours.add(Integer.toString(j-1)+","+Integer.toString(i-1));   }
                 if(i-1>0)
-                { if (data.contains(Integer.toString(j)+Integer.toString(i-1)) )
-                            neighbours.add(Integer.toString(j)+Integer.toString(i-1));     }
+                { if (data.contains(Integer.toString(j)+","+Integer.toString(i-1)) )
+                            neighbours.add(Integer.toString(j)+","+Integer.toString(i-1));     }
                 if(i-1>0 && j+1<sizeX)
-                { if (data.contains(Integer.toString(j+1)+Integer.toString(i-1)) )
-                            neighbours.add(Integer.toString(j+1)+Integer.toString(i-1));    }
+                { if (data.contains(Integer.toString(j+1)+","+Integer.toString(i-1)) )
+                            neighbours.add(Integer.toString(j+1)+","+Integer.toString(i-1));    }
                 if(j-1>0)
-                { if (data.contains(Integer.toString(j-1)+Integer.toString(i)) )
-                            neighbours.add(Integer.toString(j-1)+Integer.toString(i));    }
+                { if (data.contains(Integer.toString(j-1)+","+Integer.toString(i)) )
+                            neighbours.add(Integer.toString(j-1)+","+Integer.toString(i));    }
                 if(j-1>0 && i+1<sizeY)
-                { if (data.contains(Integer.toString(j-1)+Integer.toString(i+1)) )
+                { if (data.contains(Integer.toString(j-1)+","+Integer.toString(i+1)) )
                             neighbours.add(Integer.toString(j-1)+Integer.toString(i+1));    }
                 if(i+1<sizeY)
-                { if (data.contains(Integer.toString(j)+Integer.toString(i+1)) )
-                            neighbours.add(Integer.toString(j)+Integer.toString(i+1));    }
+                { if (data.contains(Integer.toString(j)+","+Integer.toString(i+1)) )
+                            neighbours.add(Integer.toString(j)+","+Integer.toString(i+1));    }
                 if(i+1<sizeY && j+1<sizeX)
-                { if (data.contains(Integer.toString(j+1)+Integer.toString(i+1)) )
-                            neighbours.add(Integer.toString(j+1)+Integer.toString(i+1));    }
+                { if (data.contains(Integer.toString(j+1)+","+Integer.toString(i+1)) )
+                            neighbours.add(Integer.toString(j+1)+","+Integer.toString(i+1));    }
                 if(j+1<sizeX)
-                { if (data.contains(Integer.toString(j+1)+Integer.toString(i)) )
-                            neighbours.add(Integer.toString(j+1)+Integer.toString(i));    }
+                { if (data.contains(Integer.toString(j+1)+","+Integer.toString(i)) )
+                            neighbours.add(Integer.toString(j+1)+","+Integer.toString(i));    }
                 //System.out.println("point " + Integer.toString(j) + Integer.toString(i) + " has " + neighbours.size());
                 
                 // add survivors to list
-                if(data.contains(Integer.toString(j) + Integer.toString(i))){ isAlive = true; }
+                if(data.contains(Integer.toString(j) + "," + Integer.toString(i))){ isAlive = true; }
                 if((neighbours.size()==2 || neighbours.size()==3) && isAlive)
-                    {   survivors.add(Integer.toString(j) + Integer.toString(i));}
+                    {   survivors.add(Integer.toString(j) + "," + Integer.toString(i));}
                 if(isAlive==false && neighbours.size()==3)
-                    {   survivors.add(Integer.toString(j) + Integer.toString(i));}
+                    {   survivors.add(Integer.toString(j) + "," + Integer.toString(i));}
             }
         }
         return survivors;
@@ -154,7 +154,7 @@ public class game {
                         if (dataLine == null) break;
                         for (int chars=0; chars< dataLine.length(); chars++)
                         {   if( dataLine.charAt(chars) == '*')  
-                           { data.add(Integer.toString(chars+startX) + lineNum.toString());   } 
+                           { data.add(Integer.toString(chars+startX) + "," + lineNum.toString());   } 
                         }
                     }
                 }
@@ -176,9 +176,9 @@ public class game {
 
         // make survivor values true and make display "X"
         for(String datas: data)
-        {   int x = Integer.parseInt( datas)/10;
-            int y = Integer.parseInt(datas) % 10;
-            dataDisplay[y][x] = true;                }
+        {   int x = Integer.parseInt( datas.split(",")[0]);
+            int y = Integer.parseInt(datas.split(",")[1]);
+            dataDisplay[x][y] = true;                }
 
         System.out.print("\t ");    // insert tab space
         for(int i=0; i<sizeX; i++)
@@ -187,7 +187,7 @@ public class game {
         for(int i=0; i<sizeY; i++)               // main loop for each position
             {System.out.print(i + "\t| ");
             for(int j=0; j<sizeX; j++)
-                {   if(dataDisplay[i][j]==true)
+                {   if(dataDisplay[j][i]==true)
                     {   System.out.print("X");  }
                     else { System.out.print(" "); }
 
